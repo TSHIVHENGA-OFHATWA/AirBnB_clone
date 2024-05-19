@@ -4,6 +4,12 @@
 
 import unittest
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 from models.engine.file_storage import FileStorage
 import os
 import json
@@ -16,6 +22,12 @@ class TestFileStorage(unittest.TestCase):
         """Set up test environment."""
         self.storage = FileStorage()
         self.model = BaseModel()
+        self.user = User()
+        self.state = State()
+        self.city = City()
+        self.place = Place()
+        self.amenity = Amenity()
+        self.review = Review()
         self.file_path = FileStorage._FileStorage__file_path
         FileStorage._FileStorage__objects = {}
 
@@ -49,12 +61,20 @@ class TestFileStorage(unittest.TestCase):
 
     def test_reload_loads_objects(self):
         """Test that reload loads objects from file."""
-        self.storage.new(self.model)
+        self.storage.new(self.user)
+        self.storage.new(self.state)
+        self.storage.new(self.city)
+        self.storage.new(self.place)
+        self.storage.new(self.amenity)
+        self.storage.new(self.review)
         self.storage.save()
         self.storage.reload()
-        key = "{}.{}".format(self.model.__class__.__name__, self.model.id)
-        self.assertIn(key, self.storage.all())
-        self.assertIsInstance(self.storage.all()[key], BaseModel)
+        self.assertIn("User.{}".format(self.user.id), self.storage.all())
+        self.assertIn("State.{}".format(self.state.id), self.storage.all())
+        self.assertIn("City.{}".format(self.city.id), self.storage.all())
+        self.assertIn("Place.{}".format(self.place.id), self.storage.all())
+        self.assertIn("Amenity.{}".format(self.amenity.id), self.storage.all())
+        self.assertIn("Review.{}".format(self.review.id), self.storage.all())
 
 
 if __name__ == "__main__":
