@@ -1,4 +1,4 @@
-#!/usr/bin/python333
+#!/usr/bin/python3
 """FileStorage class for handling JSON (de)serialization of instances."""
 
 import json
