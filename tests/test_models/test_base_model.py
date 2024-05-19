@@ -58,6 +58,15 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(
                 obj_dict['updated_at'], self.model.updated_at.isoformat())
 
+    def test_kwargs_initialization(self):
+        """Test initialization with keyword arguments."""
+        obj_dict = self.model.to_dict()
+        new_model = BaseModel(**obj_dict)
+        self.assertEqual(self.model.id, new_model.id)
+        self.assertEqual(self.model.created_at, new_model.created_at)
+        self.assertEqual(self.model.updated_at, new_model.updated_at)
+        self.assertEqual(str(self.model), str(new_model))
+
 
 if __name__ == "__main__":
     unittest.main()
