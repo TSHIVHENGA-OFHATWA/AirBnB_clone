@@ -4,6 +4,7 @@
 import json
 from os import path
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage:
@@ -49,6 +50,11 @@ class FileStorage:
                 try:
                     loaded_objs = json.load(file)
                     for key, value in loaded_objs.items():
-                        self.__objects[key] = BaseModel(**value)
+                        class_name, obj_id = key.split('.')
+                        if class_name == 'User':
+                            cls = User
+                        else:
+                            cls = BaseModel
+                        self.__objects[key] = cls(**value)
                 except Exception as e:
                     print("Error loading objects from JSON:", e)
