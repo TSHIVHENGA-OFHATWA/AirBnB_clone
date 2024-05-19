@@ -5,6 +5,12 @@ import json
 from os import path
 from models.base_model import BaseModel
 from models.user import User
+from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 
 
 class FileStorage:
@@ -51,10 +57,8 @@ class FileStorage:
                     loaded_objs = json.load(file)
                     for key, value in loaded_objs.items():
                         class_name, obj_id = key.split('.')
-                        if class_name == 'User':
-                            cls = User
-                        else:
-                            cls = BaseModel
-                        self.__objects[key] = cls(**value)
+                        cls = globals().get(class_name)
+                        if cls:
+                            self.__objects[key] = cls(**value)
                 except Exception as e:
                     print("Error loading objects from JSON:", e)
