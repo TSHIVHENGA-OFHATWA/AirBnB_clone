@@ -3,7 +3,6 @@
 
 
 import cmd
-import shlex
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -39,7 +38,7 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print("** class name missing **")
             return
-        args = shlex.split(arg)
+        args = arg.split()
         class_name = args[0]
         if class_name not in self.classes:
             print("** class doesn't exist **")
@@ -53,7 +52,7 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print("** class name missing **")
             return
-        args = shlex.split(arg)
+        args = arg.split()
         class_name = args[0]
         if class_name not in self.classes:
             print("** class doesn't exist **")
@@ -73,7 +72,7 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print("** class name missing **")
             return
-        args = shlex.split(arg)
+        args = arg.split()
         class_name = args[0]
         if class_name not in self.classes:
             print("** class doesn't exist **")
@@ -94,7 +93,7 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print([str(obj) for obj in storage.all().values()])
         else:
-            class_name = shlex.split()[0]
+            class_name = arg.split()[0]
             if class_name not in self.classes:
                 print("** class doesn't exist **")
                 return
@@ -109,7 +108,7 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print("** class name missing **")
             return
-        args = shlex.split()
+        args = arg.split()
         class_name = args[0]
         if class_name not in self.classes:
             print("** class doesn't exist **")
